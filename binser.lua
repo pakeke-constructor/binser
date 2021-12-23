@@ -695,16 +695,15 @@ local function newbinser()
     local function unregister(item)
         local name, metatable
         if type(item) == "string" then -- assume name
-            name, metatable = item, mts[item]
-        else -- assume metatable
-            name, metatable = ids[item], item
+            name, metatable = item, mts[item] or resources_by_name[item]
+        else -- assume item is metatable
+            name, metatable = ids[item] or resources[item], item
         end
         type_check(name, "string", "name")
         mts[name] = nil
-        if (metatable) then
-            resources[metatable] = nil
-            ids[metatable] = nil
-        end
+        
+        resources[metatable] = nil
+        ids[metatable] = nil
         serializers[name] = nil
         deserializers[name] = nil
         resources_by_name[name] = nil;
