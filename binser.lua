@@ -702,8 +702,10 @@ local function newbinser()
         type_check(name, "string", "name")
         mts[name] = nil
         
-        resources[metatable] = nil
-        ids[metatable] = nil
+        if (metatable) then
+            resources[metatable] = nil
+            ids[metatable] = nil
+        end
         serializers[name] = nil
         deserializers[name] = nil
         resources_by_name[name] = nil;
